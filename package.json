@@ -1,0 +1,44 @@
+{
+  "name": "merest-swagger",
+  "version": "0.0.1",
+  "description": "swagger documentation addon for merest",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "merest",
+    "swagger",
+    "doc",
+    "docs",
+    "documentation",
+    "routes",
+    "route",
+    "path",
+    "operation",
+    "params",
+    "response",
+    "parameters",
+    "schema",
+    "json",
+    "json-schema",
+    "jsonschema"
+  ],
+  "author": "Dmitry Scheglov <Dmitry.Scheglov@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "merest": "^1.0.9",
+    "mongoose": "^4.7.1"
+  },
+  "dependencies": {
+    "mongoose-schema-jsonschema": "^1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DScheglov/merest-swagger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DScheglov/merest-swagger/issues"
+  },
+  "homepage": "https://github.com/DScheglov/merest-swagger#readme"
+}
