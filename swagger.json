@@ -1,0 +1,431 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Merest API",
+    "version": "1.0"
+  },
+  "host": "localhost",
+  "basePath": "/api/v1/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "responses": {
+    "405": {
+      "description": "The end-point is not supported",
+      "schema": {
+        "title": "ModelAPIError",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "500": {
+      "description": "Internal API error",
+      "schema": {
+        "title": "ModelAPIError",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "stack": {}
+        }
+      }
+    }
+  },
+  "paths": {
+    "/people/": {
+      "options": {
+        "operationId": "optionsFor_people",
+        "description": "List API-options for people",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "title": "List of options",
+              "type": "array",
+              "items": {
+                "title": "Option parameters",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "searchFor_people",
+        "description": "List/Search all people",
+        "parameters": [
+          {
+            "name": "_sort",
+            "in": "query",
+            "type": "string",
+            "description": "The list of fields to order by: [-]field[,[-]field]"
+          },
+          {
+            "name": "_limit",
+            "in": "query",
+            "type": "integer",
+            "description": "The maximum number of documents in the response"
+          },
+          {
+            "name": "_skip",
+            "in": "query",
+            "type": "integer",
+            "description": "Number of documents should be skipped in the selection before responding"
+          },
+          {
+            "name": "firstName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "isPoet",
+            "in": "query",
+            "type": "boolean"
+          },
+          {
+            "name": "_id",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "__v",
+            "in": "query",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully searched",
+            "schema": {
+              "title": "List of people",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "isPoet": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[0-9a-fA-F]{24}$"
+                  },
+                  "__v": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "create_Person",
+        "description": "Create a new Person",
+        "parameters": [
+          {
+            "name": "Person",
+            "in": "body",
+            "schema": {
+              "title": "Person",
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "isPoet": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-fA-F]{24}$"
+                },
+                "__v": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "email"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created",
+            "schema": {
+              "title": "Person",
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "isPoet": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-fA-F]{24}$"
+                },
+                "__v": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Wrong method usage (use `post ~/:id` to update an object)",
+            "schema": {
+              "title": "ModelAPIError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Entity validation failed",
+            "schema": {
+              "title": "ModelAPIError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/people/{id}": {
+      "get": {
+        "description": "Find a Person by Id",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "operationId": "update_Person",
+        "description": "Find a Person by Id and update it (particulary)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Person",
+            "in": "body",
+            "schema": {
+              "title": "Person",
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "isPoet": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-fA-F]{24}$"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated",
+            "schema": {
+              "title": "Person",
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "isPoet": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-fA-F]{24}$"
+                },
+                "__v": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Person is not found by specified id",
+            "schema": {
+              "title": "ModelAPIError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Entity validation failed",
+            "schema": {
+              "title": "ModelAPIError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete_Person",
+        "description": "Find a Person by Id and delete it.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted",
+            "schema": {}
+          },
+          "404": {
+            "description": "Person is not found by specified id",
+            "schema": {
+              "title": "ModelAPIError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,3 +1,6 @@
 'use strict';
 
-var applyDocs = require('./lib/docs');
+require('mongoose-schema-jsonschema')();
+require('./lib/docs');
+
+module.exports = exports = require('./lib/describe');
