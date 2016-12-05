@@ -26,6 +26,7 @@ describe("describe(modelAPI)", function (done) {
       function (next) {
         modelAPI = new api.ModelAPIExpress();
         modelAPI.expose(models.Person);
+        modelAPI.expose(models.Book);
         app.use('/api/v1/', modelAPI);
         app.listen(testPort, next);
       }
