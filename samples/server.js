@@ -15,13 +15,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 
 
-
 var swaggerDoc = describeApi(api, {
   title: 'Library Index',
   version: 'v1',
   host: 'ubuntu-local:1337',
   path: '/api/v1'
 });
+
+// console.dir(swaggerDoc, {depth: null});
 
 app.use('/api/v1/api-docs', function(res, res) {
   res.json(swaggerDoc);
