@@ -4,7 +4,7 @@
   "description": "swagger documentation addon for merest",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "NODE_ENV=test istanbul cover _mocha -- -R spec"
   },
   "keywords": [
     "merest",
@@ -27,17 +27,19 @@
   "author": "Dmitry Scheglov <Dmitry.Scheglov@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "merest": "^1.0.9",
-    "mocha": "^3.2.0",
-    "mongoose": "^4.7.1",
     "async": "^1.5.0",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
-    "istanbul": "^0.4.4",
+    "istanbul": "^0.4.5",
+    "merest": "^1.0.9",
     "method-override": "^2.3.5",
-    "request": "^2.67.0"
+    "mocha": "^3.2.0",
+    "mongoose": "^4.7.1",
+    "request": "^2.67.0",
+    "swagger-tools": "^0.10.1"
   },
   "dependencies": {
+    "cors": "^2.8.1",
     "mongoose-schema-jsonschema": "^1.1.1"
   },
   "repository": {

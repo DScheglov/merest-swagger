@@ -2,9 +2,10 @@ var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override'); // to support HTTP OPTIONS
+var path = require('path');
+var serveStatic = require('serve-static');
 var api = require('./api');
-var describeApi = require('../index');
-var swaggerTools = require('swagger-tools')
+require('../index'); // extending ModelAPIExpress
 
 mongoose.connect('mongodb://localhost/merest-sample');
 
@@ -14,31 +15,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 
+api.exposeSwagger('/swagger.json', {
+    title: 'Library Index',
+    host: 'ubuntu-local:1337',
+    version: 'v1',
+    path: '/api/v1',
+    beautify: '  '
+})
+// api.exposeSwaggerUi({
+//   title: 'Library Index',
+//   host: 'ubuntu-local:1337',
+//   version: 'v1',
+//   path: '/api/v1',
+//   swaggerUi: '/swagger-ui',
+//   apiDocs: '/swagger.json'
+// }, (err, api) => {
+//   app.use('/api/v1', api);
+// })
+//
 
-var swaggerDoc = describeApi(api, {
-  title: 'Library Index',
-  version: 'v1',
-  host: 'ubuntu-local:1337',
-  path: '/api/v1'
-});
+api.exposeSwaggerUi('/swagger-ui');
 
-// console.dir(swaggerDoc, {depth: null});
-
-app.use('/api/v1/api-docs', function(res, res) {
-  res.json(swaggerDoc);
-});
-
-swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
-  // Serve the Swagger documents and Swagger UI
-  api.use(middleware.swaggerUi({
-    swaggerUi: '/swagger-ui'
-  }));
-  app.use('/api/v1', api); // exposing our API
-
-});
+app.use('/api/v1', api);
 
 // Start the server
-app.listen(1337, function(){
+app.listen(1337, function() {
   console.log('Express server is listening on port 1337');
   console.log('Swagger UI avaliable');
 });

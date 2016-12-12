@@ -26,11 +26,10 @@ api.expose(models.Person, {
       method: 'get',
       title: 'The list of author\'s mails'
     }
+  },
+  expose: {
+    Reverse: true
   }
-  // ,
-  // expose: {
-  //   Reverse: true
-  // }
 })
 
 module.exports = exports = api;

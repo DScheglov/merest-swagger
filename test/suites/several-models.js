@@ -16,7 +16,7 @@ var api = require("merest");
 var describeApi = require('../../lib/describe');
 
 
-describe("Simplest model exposition: describeApi()", function (done) {
+describe("Exposing Book & Person: describeApi()", function (done) {
 
   var swaggerDoc;
 
@@ -27,6 +27,7 @@ describe("Simplest model exposition: describeApi()", function (done) {
       function (next) {
         var modelAPI = new api.ModelAPIExpress();
         modelAPI.expose(models.Person);
+        modelAPI.expose(models.Book);
         app.use('/api/v1/', modelAPI);
         swaggerDoc = describeApi(modelAPI);
         next()
@@ -48,9 +49,13 @@ describe("Simplest model exposition: describeApi()", function (done) {
 
   });
 
-  it('should contain 3 paths', function(done) {
+  it('should contain 5 paths', function(done) {
     var paths = Object.keys(swaggerDoc.paths);
-    assert.deepEqual(paths, ['/', '/people/', '/people/{id}']);
+    assert.deepEqual(paths, [
+      '/',
+      '/people/', '/people/{id}',
+      '/books/', '/books/{id}'
+    ]);
     done();
   });
 
@@ -114,7 +119,57 @@ describe("Simplest model exposition: describeApi()", function (done) {
     done();
   });
 
-  it('should contain 8 model definitions', function(done) {
+  it('shoild contain 3 operation for /books/ path', function(done) {
+    var opers = swaggerDoc.paths['/books/'];
+    assert.deepEqual(Object.keys(opers), ['options', 'get', 'post']);
+    assert.equal(
+      opers['options'].responses['200'].schema.$ref,
+      '#/definitions/Options'
+    );
+    assert.deepEqual(
+      opers['get'].responses['200'].schema, {
+        title: 'List of books',
+        type: 'array',
+        items: {
+          $ref: '#/definitions/Book_Response'
+        }
+      }
+    );
+    assert.equal(
+      opers['post'].parameters[0].schema.$ref,
+      '#/definitions/Book'
+    );
+    assert.equal(
+      opers['post'].responses['201'].schema.$ref,
+     '#/definitions/Book_Response'
+    );
+    done();
+  });
+
+  it('shoild contain 3 operation for /books/{id} path', function(done) {
+    var opers = swaggerDoc.paths['/books/{id}'];
+    assert.deepEqual(Object.keys(opers), ['get', 'post', 'delete']);
+    assert.equal(
+      opers['get'].responses['200'].schema.$ref,
+      '#/definitions/Book_Response'
+    );
+    assert.equal(opers['post'].parameters[0].name, 'id');
+    assert.equal(
+      opers['post'].parameters[1].schema.$ref,
+      '#/definitions/Book_Update'
+    );
+    assert.equal(
+      opers['post'].responses['200'].schema.$ref,
+      '#/definitions/Book_Response'
+    );
+    assert.equal(
+      opers['delete'].responses['200'].schema.$ref,
+      '#/definitions/deleteResponse'
+    );
+    done();
+  });
+
+  it('should contain 11 model definitions', function(done) {
     var models = Object.keys(swaggerDoc.definitions);
     assert.deepEqual(models, [
       'modelAPIError_E4xx',
@@ -124,115 +179,11 @@ describe("Simplest model exposition: describeApi()", function (done) {
       'deleteResponse',
       'Person_Response',
       'Person',
-      'Person_Update'
-    ])
-    done();
-  });
-
-});
-
-describe("Searching by POST-method: describeApi()", function (done) {
-
-  var swaggerDoc;
-
-  before(function (done) {
-
-    async.waterfall([
-      app.init, db.init,
-      function (next) {
-        var modelAPI = new api.ModelAPIExpress();
-        modelAPI.expose(models.Person, {
-          search: {
-            method: 'post',
-            path: 'search'
-          }
-        });
-        app.use('/api/v1/', modelAPI);
-        swaggerDoc = describeApi(modelAPI);
-        next();
-      }
-    ], done);
-
-  });
-
-  after(function (done) {
-    db.close(done);
-  });
-
-  it('should return a valid swagger document', function (done) {
-
-    spec.validate(swaggerDoc, function (err, result) {
-      assert.ok(!err);
-      assert.ok(!result);
-      done();
-    })
-
-  });
-
-  it('should contain 4 paths', function(done) {
-    var paths = Object.keys(swaggerDoc.paths);
-    assert.deepEqual(paths, ['/', '/people/', '/people/search', '/people/{id}']);
-    done();
-  });
-
-  it('shoild contain 1 operation for root path', function(done) {
-    var opers = swaggerDoc.paths['/'];
-    assert.deepEqual(Object.keys(opers), ['options']);
-    assert.equal(
-      opers['options'].responses['200'].schema.$ref,
-      '#/definitions/Options'
-    );
-    done();
-  });
-
-  it('shoild contain 2 operation for /people/ path', function(done) {
-    var opers = swaggerDoc.paths['/people/'];
-    assert.deepEqual(Object.keys(opers), ['options', 'post']);
-    assert.equal(
-      opers['options'].responses['200'].schema.$ref,
-      '#/definitions/Options'
-    );
-    assert.equal(
-      opers['post'].parameters[0].schema.$ref,
-      '#/definitions/Person'
-    );
-    assert.equal(
-      opers['post'].responses['201'].schema.$ref,
-     '#/definitions/Person_Response'
-    );
-    done();
-  });
-
-  it('shoild contain 1 operation for /people/search path', function(done) {
-    var opers = swaggerDoc.paths['/people/search'];
-    assert.deepEqual(Object.keys(opers), ['post']);
-
-    var searchQueryParam = opers['post'].parameters[
-      opers['post'].parameters.length - 1
-    ];
-
-    assert.deepEqual(searchQueryParam.schema, {
-      title: 'Person_Search',
-      type: 'object',
-      properties: {
-        firstName: { type: 'string' },
-        lastName: { type: 'string' },
-        email: { type: 'string' },
-        isPoet: { type: 'boolean', default: false },
-        _id: { type: 'string', format: 'uuid', pattern: '^[0-9a-fA-F]{24}$' },
-        __v: { type: 'number' }
-      }
-    });
-
-    assert.deepEqual(
-      opers['post'].responses['200'].schema, {
-        title: 'List of people',
-        type: 'array',
-        items: {
-          $ref: '#/definitions/Person_Response'
-        }
-      }
-    );
+      'Person_Update',
+      'Book_Response',
+      'Book',
+      'Book_Update'
+    ]);
     done();
   });
 
