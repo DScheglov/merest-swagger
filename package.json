@@ -1,6 +1,6 @@
 {
   "name": "merest-swagger",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "swagger documentation addon for merest",
   "main": "index.js",
   "scripts": {
