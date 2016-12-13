@@ -60,6 +60,7 @@ describe("Exposing static method [POST]: describeApi()", function (done) {
 
   it('shoild contain 1 operation for /people/email-list', function(done) {
     var opers = swaggerDoc.paths['/people/email-list'];
+    assert.equal(opers['post'].operationId, 'Person_statics_emailList');
     assert.deepEqual(Object.keys(opers), ['post']);
     assert.deepEqual(
       opers['post'].responses['200'].schema,
