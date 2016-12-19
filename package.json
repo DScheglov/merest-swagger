@@ -36,7 +36,6 @@
     "coveralls": "^2.11.15",
     "express": "^4.13.3",
     "istanbul": "^0.4.5",
-    "merest": "^1.0.9",
     "method-override": "^2.3.5",
     "mocha": "^3.2.0",
     "mongoose": "^4.7.1",
@@ -45,6 +44,7 @@
   },
   "dependencies": {
     "cors": "^2.8.1",
+    "merest": "git+https://github.com/DScheglov/merest.git",
     "mongoose-schema-jsonschema": "^1.1.1"
   },
   "repository": {
