@@ -22,7 +22,7 @@ describe("Restrictions for search by certain fields (HTTP POST): describeApi()",
 
   before(function (done) {
     async.waterfall([
-      app.init, db.init,
+      app.init,
       function (next) {
         var modelAPI = new api.ModelAPIExpress();
         modelAPI.expose(models.Person, {
@@ -98,10 +98,7 @@ describe("Restrictions for search by certain fields (HTTP GET): describeApi()", 
   before(function (done) {
 
     async.waterfall([
-      app.init, db.init,
-      db.fixtures.bind(null, {
-        Person: '../fixtures/people'
-      }),
+      app.init,
       function (next) {
         var modelAPI = new api.ModelAPIExpress();
         modelAPI.expose(models.Person, {

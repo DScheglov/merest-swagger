@@ -31,7 +31,7 @@ describe("Exposing static method [POST]: describeApi()", function (done) {
             emailList: true
           }
         });
-        app.use('/api/v1/', modelAPI);
+        app.use('/api/v1', modelAPI);
         swaggerDoc = describeApi(modelAPI);
         next()
       }

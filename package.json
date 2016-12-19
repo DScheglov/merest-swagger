@@ -4,11 +4,15 @@
   "description": "swagger documentation addon for merest",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test istanbul cover _mocha -- -R spec"
+    "test-loc": "NODE_ENV=test istanbul cover _mocha -- -R spec",
+    "test": "./test.sh"
   },
   "keywords": [
     "merest",
     "swagger",
+    "swagger-ui",
+    "swagger.json",
+    "swagger.yml",
     "doc",
     "docs",
     "documentation",
@@ -29,6 +33,7 @@
   "devDependencies": {
     "async": "^1.5.0",
     "body-parser": "^1.14.1",
+    "coveralls": "^2.11.15",
     "express": "^4.13.3",
     "istanbul": "^0.4.5",
     "merest": "^1.0.9",

@@ -237,3 +237,81 @@ describe("Searching by POST-method: describeApi()", function (done) {
   });
 
 });
+
+
+describe("Strange model exposition: describeApi()", function (done) {
+
+  var swaggerDoc;
+
+  before(function (done) {
+
+    async.waterfall([
+      app.init, db.init,
+      function (next) {
+        var modelAPI = new api.ModelAPIExpress();
+        modelAPI.expose(models.Strange);
+        app.use('/api/v1/', modelAPI);
+        swaggerDoc = describeApi(modelAPI);
+        next()
+      }
+    ], done);
+  });
+
+  after(function (done) {
+    db.close(done);
+  });
+
+  it('should return a valid swagger document', function (done) {
+
+    spec.validate(swaggerDoc, function (err, result) {
+      assert.ok(!err);
+      assert.ok(!result);
+      done();
+    })
+
+  });
+
+});
+
+
+describe("Model exposition w/o CRUD: describeApi()", function (done) {
+
+  var swaggerDoc;
+
+  before(function (done) {
+
+    async.waterfall([
+      app.init, db.init,
+      function (next) {
+        var modelAPI = new api.ModelAPIExpress({ options: false });
+        modelAPI.expose(models.Person, {
+          create: false,
+          update: false,
+          search: false,
+          delete: false,
+          details: false,
+          options: false,
+          expose: { Reverse: true }
+        });
+        app.use('/api/v1/', modelAPI);
+        swaggerDoc = describeApi(modelAPI);
+        next()
+      }
+    ], done);
+  });
+
+  after(function (done) {
+    db.close(done);
+  });
+
+  it('should return a valid swagger document', function (done) {
+
+    spec.validate(swaggerDoc, function (err, result) {
+      assert.ok(!err);
+      assert.ok(!result);
+      done();
+    })
+
+  });
+
+});

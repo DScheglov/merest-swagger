@@ -1,5 +1,6 @@
 
 module.exports = exports = {
   Person: require('./person'),
-  Book: require('./book')
+  Book: require('./book'),
+  Strange: require('./strange')
 };

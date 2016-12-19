@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/DScheglov/merest-swagger/badge.svg?branch=master)](https://coveralls.io/github/DScheglov/merest-swagger?branch=master)
 # merest-swagger
 
 The extension of `merest` that provides SWAGGER documentation support.
@@ -5,7 +6,10 @@ The extension of `merest` that provides SWAGGER documentation support.
 ## Installation
 
 ```shell
-npm install merest-swagger
+npm i --save merest-swagger
 ```
+
+## Documentation
+[http://dscheglov.github.io/merest/](http://dscheglov.github.io/merest/)
 
 Details see: [merest](https://www.npmjs.com/package/merest)

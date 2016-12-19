@@ -8,3 +8,4 @@ require('./suites/population');
 require('./suites/rest-method-restrictions');
 require('./suites/swagger-options');
 require('./suites/helpers');
+require('./suites/swagger-methods');
