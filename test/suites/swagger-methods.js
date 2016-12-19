@@ -220,7 +220,7 @@ describe("ModelAPIExpress.exposeSwaggerUi()", function (done) {
           path: '/api/v1/'
         });
         modelAPI.expose(models.Person);
-        modelAPI.exposeSwaggerUi(null, {
+        modelAPI.exposeSwaggerUi({
           cors: false
         });
         app.use('/api/v1/', modelAPI);
@@ -279,7 +279,7 @@ describe("ModelAPIExpress.exposeSwaggerUi()", function (done) {
 
 });
 
-describe("ModelAPIExpress.exposeSwaggerUi()", function (done) {
+describe("Exposing swagerDoc explicitly: ModelAPIExpress.exposeSwaggerUi()", function (done) {
 
   before(function (done) {
 

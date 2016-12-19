@@ -40,11 +40,11 @@
     "mocha": "^3.2.0",
     "mongoose": "^4.7.1",
     "request": "^2.67.0",
-    "swagger-tools": "^0.10.1"
+    "swagger-tools": "^0.10.1",
+    "merest": "^1.2.0"
   },
   "dependencies": {
     "cors": "^2.8.1",
-    "merest": "git+https://github.com/DScheglov/merest.git",
     "mongoose-schema-jsonschema": "^1.1.1",
     "serve-static": "^1.11.1"
   },

@@ -7,6 +7,7 @@ The extension of `merest` that provides SWAGGER documentation support.
 ## Installation
 
 ```shell
+npm up merest
 npm i --save merest-swagger
 ```
 
