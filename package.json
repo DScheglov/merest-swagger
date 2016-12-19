@@ -45,9 +45,7 @@
   "dependencies": {
     "cors": "^2.8.1",
     "merest": "git+https://github.com/DScheglov/merest.git",
-    "mongoose-schema-jsonschema": "^1.1.1"
-  },
-  "optionalDependecies": {
+    "mongoose-schema-jsonschema": "^1.1.1",
     "serve-static": "^1.11.1"
   },
   "repository": {
