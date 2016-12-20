@@ -219,7 +219,7 @@ describe("Searching by POST-method: describeApi()", function (done) {
         lastName: { type: 'string' },
         email: { type: 'string' },
         isPoet: { type: 'boolean', default: false },
-        _id: { type: 'string', format: 'uuid', pattern: '^[0-9a-fA-F]{24}$' },
+        _id: { type: 'string', pattern: '^[0-9a-fA-F]{24}$' },
         __v: { type: 'number' }
       }
     });

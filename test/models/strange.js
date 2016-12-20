@@ -13,6 +13,8 @@ var StrangeSchema = new Schema({
     n: Number,
     s: String
   },
+  se: {type: String, enum: ['a', 'b', 'c']},
+  sr: {type: String, match: /read/i},
   an: [Number],
   as: [String],
   ad: [Date],

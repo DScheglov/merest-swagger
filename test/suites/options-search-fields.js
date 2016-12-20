@@ -136,11 +136,9 @@ describe("Restrictions for search by certain fields (HTTP GET): describeApi()", 
   it('shoild contain correct description for search operation', function(done) {
     var opers = swaggerDoc.paths['/people/'];
 
-    assert.equal(opers['get'].parameters.length, 4);
+    assert.equal(opers['get'].parameters.length, 13);
 
-    var searchQueryParam = opers['get'].parameters[
-      opers['get'].parameters.length - 1
-    ];
+    var searchQueryParam = opers['get'].parameters[3];
 
     assert.deepEqual(searchQueryParam, {
       name: 'firstName',

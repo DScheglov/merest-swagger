@@ -7,8 +7,9 @@ var api = new merest.ModelAPIExpress({ options: false });
 
 api.expose(models.Book, {
   fields: 'title year author',
+  queryFields: {title: true, author: true},
   populate: { path: 'author', select: 'firstName lastName -_id' },
-  search: { method: 'get', title: 'Let\'s search for books', populate: {} },
+  search: { method: 'get', title: 'Let\'s search for books', populate: null },
   options: false
 });
 

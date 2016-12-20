@@ -83,7 +83,6 @@ describe("Populating author of Book: describeApi()", function (done) {
 
     assert.deepEqual(Book_Update.properties.author.items, {
       type: 'string',
-      format: 'uuid',
       pattern: '^[0-9a-fA-F]{24}$',
       'x-ref': 'Person',
       'description': 'Refers to Person'
