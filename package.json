@@ -1,6 +1,6 @@
 {
   "name": "merest-swagger",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "swagger documentation addon for merest",
   "main": "index.js",
   "scripts": {
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "cors": "^2.8.1",
-    "mongoose-schema-jsonschema": "^1.1.7",
+    "mongoose-schema-jsonschema": "^1.1.8",
     "serve-static": "^1.11.1"
   },
   "repository": {

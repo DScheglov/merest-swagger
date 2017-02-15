@@ -41,7 +41,8 @@ var StrangeSchema = new Schema({
   rNestedDoc: {
     type: {
       n: Number,
-      s: String
+      s: String,
+      a: {type: Schema.Types.Mixed, required: true, default: {}}
     },
     required: true
   },
@@ -53,7 +54,8 @@ var StrangeSchema = new Schema({
     type: String,
     description: 'Described field',
     required: true
-  }
+  },
+  anyTypeField: {type: Schema.Types.Mixed}
 });
 
 module.exports = exports = mongoose.model('Strange', StrangeSchema);
