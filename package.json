@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "cors": "^2.8.1",
-    "mongoose-schema-jsonschema": "^1.1.1",
+    "mongoose-schema-jsonschema": "^1.1.7",
     "serve-static": "^1.11.1"
   },
   "repository": {
