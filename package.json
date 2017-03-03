@@ -32,21 +32,21 @@
   "license": "MIT",
   "devDependencies": {
     "async": "^1.5.0",
-    "body-parser": "^1.14.1",
+    "body-parser": "^1.17.0",
     "coveralls": "^2.11.15",
-    "express": "^4.13.3",
+    "express": "^4.15.0",
     "istanbul": "^0.4.5",
+    "merest": "^1.2.2",
     "method-override": "^2.3.5",
     "mocha": "^3.2.0",
-    "mongoose": "^4.7.1",
+    "mongoose": "^4.8.5",
     "request": "^2.67.0",
-    "swagger-tools": "^0.10.1",
-    "merest": "^1.2.0"
+    "swagger-tools": "^0.10.1"
   },
   "dependencies": {
     "cors": "^2.8.1",
-    "mongoose-schema-jsonschema": "^1.1.8",
-    "serve-static": "^1.11.1"
+    "mongoose-schema-jsonschema": "^1.1.10",
+    "serve-static": "^1.12.0"
   },
   "repository": {
     "type": "git",

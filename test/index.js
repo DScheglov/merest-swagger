@@ -9,3 +9,4 @@ require('./suites/rest-method-restrictions');
 require('./suites/swagger-options');
 require('./suites/helpers');
 require('./suites/swagger-methods');
+require('./suites/readonly');
