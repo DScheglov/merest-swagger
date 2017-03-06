@@ -1,24 +1,24 @@
 'use strict';
 
-var async = require('async');
-var extendMongoose = require('mongoose-schema-jsonschema');
-var mongoose = extendMongoose(require('mongoose'));
-var request = require("request");
-var util = require("util");
-var assert = require('assert');
-var spec = require('swagger-tools').specs.v2;
-var api = require("merest");
+const async = require('async');
+const extendMongoose = require('mongoose-schema-jsonschema');
+const mongoose = extendMongoose(require('mongoose'));
+const request = require("request");
+const util = require("util");
+const assert = require('assert');
+const spec = require('swagger-tools').specs.v2;
+const api = require("merest");
 
-var app = require('../setup/app');
-var db = require('../setup/db');
-var models = require('../models');
+const app = require('../setup/app');
+const db = require('../setup/db');
+const models = require('../models');
 
-var describeApi = require('../../lib/describe');
+const describeApi = require('../../lib/describe');
 
 
 describe("Restrictions for search by certain fields (HTTP POST): describeApi()", function (done) {
 
-  var swaggerDoc;
+  let swaggerDoc;
 
   before(function (done) {
     async.waterfall([
@@ -155,6 +155,77 @@ describe("Restrictions for search by certain fields (HTTP GET): describeApi()", 
         }
       }
     );
+    done();
+  });
+
+});
+
+describe("Restrictions for search by certain fields and operators (HTTP GET): describeApi()", function (done) {
+
+  var swaggerDoc;
+
+  before(function (done) {
+
+    async.waterfall([
+      app.init,
+      function (next) {
+        var modelAPI = new api.ModelAPIExpress();
+        modelAPI.expose(models.Person, {
+          queryFields: {
+            _id: { eq: true },
+            firstName: { re: true, eq: false }
+          }
+			  });
+        app.use('/api/v1/', modelAPI);
+        swaggerDoc = describeApi(modelAPI);
+        next()
+      }
+    ], done);
+  });
+
+  after(function (done) {
+    db.close(done);
+  });
+
+  it('should return a valid swagger document', function (done) {
+
+    spec.validate(swaggerDoc, function (err, result) {
+      assert.ok(!err);
+      assert.ok(!result);
+      done();
+    })
+
+  });
+
+  it('should contain 3 paths', function(done) {
+    var paths = Object.keys(swaggerDoc.paths);
+    assert.deepEqual(paths, ['/', '/people/', '/people/{id}']);
+    done();
+  });
+
+  it('shoild contain correct description for search operation', function(done) {
+    let opers = swaggerDoc.paths['/people/'];
+
+    assert.equal(opers['get'].parameters.length, 5);
+
+    let searchQueryParam = opers['get'].parameters[3];
+
+    assert.deepEqual(searchQueryParam, {
+      name: '_id',
+      type: 'string',
+      pattern: '^[0-9a-fA-F]{24}$',
+      in: 'query'
+    });
+
+    searchQueryParam = opers['get'].parameters[4];
+
+    assert.deepEqual(searchQueryParam, {
+      name: 'firstName__re',
+      type: 'string',
+      in: 'query',
+      description: 'firstName matches to the regexp represented by a value (/pattern/mods syntax is allowed)'
+    });
+
     done();
   });
 
